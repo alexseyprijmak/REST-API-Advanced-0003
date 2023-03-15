@@ -1,0 +1,117 @@
+create database test_db
+    with owner postgres;
+
+create table fridges
+(
+    fridge_id integer default nextval('fridges_id_seq'::regclass) not null
+        primary key
+);
+
+alter table fridges
+    owner to postgres;
+
+insert into fridges(fridge_id) values(1);
+
+create table products
+(
+    id     serial
+        primary key,
+    name   varchar(30)       not null,
+    type   varchar(15)       not null,
+    price  integer           not null,
+    f_id   integer
+        references fridges,
+    amount integer default 0 not null
+);
+
+alter table products
+    owner to postgres;
+
+insert 
+    into
+        products
+        (amount, f_id, name, price, type) 
+    values
+        (2, 1, 'plum', 21, 'FRUIT');
+
+insert 
+    into
+        products
+        (amount, f_id, name, price, type) 
+    values
+        (5, 1, 'apple', 14, 'FRUIT');
+
+insert
+    into
+        products
+        (amount, f_id, name, price, type)
+    values
+        (2, 1, 'orange', 8, 'FRUIT');
+
+
+insert
+    into
+        products
+        (amount, f_id, name, price, type)
+    values
+        (15, 1, 'watermelon', 7, 'FRUIT');
+
+
+insert
+    into
+        products
+        (amount, f_id, name, price, type)
+    values
+        (5, 1, 'banana', 10, 'FRUIT');
+
+insert
+    into
+        products
+        (amount, f_id, name, price, type)
+    values
+        (7, 1, 'avocado', 15, 'FRUIT');
+
+insert
+    into
+        products
+        (amount, f_id, name, price, type)
+    values
+        (7, 1, 'appricot', 10, 'FRUIT');
+
+
+
+create table recipes
+(
+    id   serial
+        constraint recipes_pk
+            primary key,
+    name varchar(30) not null
+);
+
+insert into recipes(id) values(1);
+
+insert
+    into
+        recipes_products
+        (recipes_id, products_id)
+    values
+        (1, 1)
+
+insert
+    into
+        recipes_products
+        (recipes_id, products_id)
+    values
+        (1, 3)
+
+
+alter table recipes
+    owner to postgres;
+    create table recipes_products
+    (
+        recipes_id  integer
+            constraint recipes_products_recipes_id_fk
+                references recipes,
+        products_id integer
+            constraint recipes_products_products_id_fk
+                references products);
