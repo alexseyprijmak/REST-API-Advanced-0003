@@ -1,7 +1,5 @@
 package com.epam.esm.order;
 
-import com.epam.esm.tag.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,11 +8,15 @@ import java.util.List;
 @RequestMapping(value = "/orders")
 public class OrderController {
 
-    @Autowired
-    private OrderService orderService;
+    private final OrderService orderService;
+
+    public OrderController(OrderService orderService) {
+        this.orderService = orderService;
+    }
+
     @PostMapping("/add")
-    public Order addOrder(@RequestParam(name = "user_id") Integer userId,
-                        @RequestParam(name = "gift-certificate-id") Integer giftCertificateId) {
+    public Order addOrder(@RequestParam(name = "user_id") Long userId,
+                        @RequestParam(name = "gift-certificate-id") Long giftCertificateId) {
         return orderService.addOrder(userId, giftCertificateId);
     }
 

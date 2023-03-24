@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ public class GiftCertificateController {
     private GiftCertificateService giftCertificateService;
 
     @GetMapping("/{id}")
-    public GiftCertificate getGiftCertificateById(@PathVariable("id") Integer giftCertificateId) {
+    public GiftCertificate getGiftCertificateById(@PathVariable("id") Long giftCertificateId) {
         return giftCertificateService.getGiftCertificateById(giftCertificateId);
     }
 
@@ -25,27 +26,20 @@ public class GiftCertificateController {
         return giftCertificateService.findAllGiftCertificate();
     }
 
-//    @PostMapping("/add")
-////    @ResponseBody
-//    public GiftCertificate addGiftCertificate(@RequestBody GiftCertificate giftCertificate) {
-//        return giftCertificateService.addGiftCertificate(giftCertificate);
-//    }
-
-
     @PostMapping("/add")
     public GiftCertificate addGiftCertificate(@RequestParam(name = "name") String name,
                                               @RequestParam(name = "description") String description,
-                                              @RequestParam(name = "price") Integer price,
+                                              @RequestParam(name = "price") BigDecimal price,
                                               @RequestParam(name = "duration") Integer duration) {
 
         return giftCertificateService.addGiftCertificate(name, description, price, duration);
     }
 
     @PostMapping("/update")
-    public GiftCertificate updateGiftCertificate(@RequestParam(name = "id") Integer id,
+    public GiftCertificate updateGiftCertificate(@RequestParam(name = "id") Long id,
                                                  @RequestParam(name = "name") String name,
                                                  @RequestParam(name = "description") String description,
-                                                 @RequestParam(name = "price") Integer price,
+                                                 @RequestParam(name = "price") BigDecimal price,
                                                  @RequestParam(name = "duration") Integer duration) {
 
         return giftCertificateService.updateGiftCertificate(id, name, description, price, duration);
@@ -53,8 +47,8 @@ public class GiftCertificateController {
 
     @PostMapping("/addTag")
 
-    public GiftCertificate addTagToGiftCertificate(@RequestParam(name = "certificate_id") Integer giftCertificateId,
-                                                   @RequestParam(name = "tag_id") Integer tagId) {
+    public GiftCertificate addTagToGiftCertificate(@RequestParam(name = "certificate_id") Long giftCertificateId,
+                                                   @RequestParam(name = "tag_id") Long tagId) {
         return giftCertificateService.addGiftCertificatesToTags(giftCertificateId, tagId);
     }
 
@@ -65,7 +59,7 @@ public class GiftCertificateController {
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteGiftCertificate(@PathVariable("id") Integer certificateId) {
+    public ResponseEntity<HttpStatus> deleteGiftCertificate(@PathVariable("id") Long certificateId) {
         giftCertificateService.deleteGiftCertificateById(certificateId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

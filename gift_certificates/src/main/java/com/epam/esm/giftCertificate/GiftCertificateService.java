@@ -5,7 +5,8 @@ import com.epam.esm.tag.Tag;
 import com.epam.esm.tag.TagRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -22,7 +23,7 @@ public class GiftCertificateService {
         this.tagRepository = tagRepository;
     }
 
-    public GiftCertificate getGiftCertificateById(Integer id) {
+    public GiftCertificate getGiftCertificateById(Long id) {
         Optional<GiftCertificate> giftCertificate = giftCertificateRepository.findById(id);
         if (giftCertificate.isPresent()) {
             return giftCertificate.get();
@@ -32,7 +33,7 @@ public class GiftCertificateService {
     }
 
 
-    public GiftCertificate addGiftCertificate(String name, String description, Integer price, Integer duration) {
+    public GiftCertificate addGiftCertificate(String name, String description, BigDecimal price, Integer duration) {
 
         List<GiftCertificate> giftCertificates = giftCertificateRepository.findAll().stream()
                 .filter(giftCertificateInDb -> name.equals(giftCertificateInDb.getName()))
@@ -42,13 +43,13 @@ public class GiftCertificateService {
             throw new NoSuchEntityException(String.format("Gift certificate with name : %s already exists", giftCertificates.get(0).getName()));
         } else {
             GiftCertificate giftCertificate = new GiftCertificate(
-                    name, description, price, duration, new Date(), new Date()
+                    name, description, price, duration, LocalDateTime.now(), LocalDateTime.now()
             );
             return giftCertificateRepository.save(giftCertificate);
         }
     }
 
-    public GiftCertificate addGiftCertificatesToTags(Integer giftCertificateId, Integer tagId) {
+    public GiftCertificate addGiftCertificatesToTags(Long giftCertificateId, Long tagId) {
 
         List<GiftCertificate> giftCertificatesListWithIdFilter = giftCertificateRepository.findAll().stream()
                 .filter(giftCertificateIDInDb -> giftCertificateId.equals(giftCertificateIDInDb.getId()))
@@ -63,26 +64,27 @@ public class GiftCertificateService {
 //                    .toList();
 
             List<Tag> tagListWithIdFilter = tagRepository.findAll().stream()
-                    .filter(tagInDB -> tagInDB.getId().equals(tagId))
+                    .filter(tagId::equals)
                     .toList();
 
-            if (
+//            if (
 //                    g
 //            iftCertificatesListWithTagFilter.size() == 0 ||
-                    tagListWithIdFilter.size() == 0) {
-                // TODO exeption? msg
-                throw new NoSuchEntityException(String.format("Tag  with id : %s is not exists", tagId));
-            } else {
+//                    tagListWithIdFilter.size() == 0) {
+//                // TODO exeption? msg
+//                throw new NoSuchEntityException(String.format("Tag  with id : %s is not exists", tagId));
+//            } else {
                 Set<Tag> tagSet = giftCertificate.getTags();
                 tagSet.add(tagRepository.getById(tagId));
                 giftCertificate.setTags(tagSet);
 
                 return giftCertificateRepository.save(giftCertificate);
-            }
+//            }
         }
     }
 
-    public GiftCertificate updateGiftCertificate(Integer id, String name, String description, Integer price, Integer duration) {
+
+    public GiftCertificate updateGiftCertificate(Long id, String name, String description, BigDecimal price, Integer duration) {
         List<GiftCertificate> giftCertificates = giftCertificateRepository.findAll().stream()
                 .filter(giftCertificateInDb -> id.equals(giftCertificateInDb.getId()))
                 .toList();
@@ -94,7 +96,7 @@ public class GiftCertificateService {
             giftCertificate.setDescription(description);
             giftCertificate.setPrice(price);
             giftCertificate.setDuration(duration);
-            giftCertificate.setLastUpdateDate(new Date());
+            giftCertificate.setLastUpdateDate(LocalDateTime.now());
             return giftCertificateRepository.save(giftCertificate);
         }
 
@@ -120,7 +122,7 @@ public class GiftCertificateService {
     }
 
 
-    public void deleteGiftCertificateById(Integer giftCertificateId) {
+    public void deleteGiftCertificateById(Long giftCertificateId) {
         giftCertificateRepository.delete(giftCertificateRepository.getById(giftCertificateId));
     }
 

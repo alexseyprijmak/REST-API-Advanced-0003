@@ -1,21 +1,21 @@
 CREATE TABLE gift_certificates
 (
-    certificate_id   INT GENERATED ALWAYS AS IDENTITY,
+    id   INT GENERATED ALWAYS AS IDENTITY,
     "name"           varchar(120) NOT NULL,
     description      varchar(120) NOT NULL,
     price            INTEGER          NOT NULL,
     duration         INTEGER          NOT NULL,
     create_date      DATE        NOT NULL,
     last_update_date DATE       NOT NULL,
-    PRIMARY KEY (certificate_id)
+    PRIMARY KEY (id)
 );
 
 
 CREATE TABLE tags
 (
-    tag_id INT GENERATED ALWAYS AS IDENTITY,
+    id INT GENERATED ALWAYS AS IDENTITY,
     "name" varchar(120) NOT NULL,
-    PRIMARY KEY (tag_id)
+    PRIMARY KEY (id)
 
 );
 
@@ -33,7 +33,7 @@ CREATE TABLE gift_certificates_tags
 
 CREATE TABLE users
 (
-    user_id INT GENERATED ALWAYS AS IDENTITY,
+    id INT GENERATED ALWAYS AS IDENTITY,
     "name" varchar(120) NOT NULL,
     PRIMARY KEY (user_id)
 

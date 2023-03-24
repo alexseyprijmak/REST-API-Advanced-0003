@@ -1,18 +1,11 @@
 package com.epam.esm.order;
 
 
-import com.epam.esm.exeptions.NoSuchEntityException;
-import com.epam.esm.giftCertificate.GiftCertificate;
 import com.epam.esm.giftCertificate.GiftCertificateRepository;
-import com.epam.esm.tag.Tag;
-import com.epam.esm.tag.TagRepository;
-import com.epam.esm.user.User;
 import com.epam.esm.user.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.imageio.spi.ServiceRegistry;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -28,14 +21,14 @@ public class OrderService {
         this.userRepository = userRepository;
     }
 
-    public Order addOrder(Integer userId, Integer giftCertificateId) {
+    public Order addOrder(Long userId, Long giftCertificateId) {
 
         // TODO chek user and certificate if valid
 
             Order order = new Order();
             order.setGiftCertificate(giftCertificateRepository.getById(giftCertificateId));
             order.setUser(userRepository.getById(userId));
-            order.setPurchaseTime(new Date());
+            order.setPurchaseTime(LocalDateTime.now());
             order.setPrice(giftCertificateRepository.getById(giftCertificateId).getPrice());
 
             return orderRepository.save(order);

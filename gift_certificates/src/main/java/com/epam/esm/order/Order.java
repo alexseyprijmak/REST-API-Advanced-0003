@@ -2,30 +2,29 @@ package com.epam.esm.order;
 
 import com.epam.esm.giftCertificate.GiftCertificate;
 import com.epam.esm.user.User;
+import com.epam.esm.utils.abstractClasses.Identifiable;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "orders")
-public class Order {
+public class Order extends Identifiable {
 
-    public Order() {
-    }
+    public Order() {}
 
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
-    private Integer id;
-
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "purchase_time")
-    private Date purchaseTime;
+    private LocalDateTime purchaseTime;
 
     @Column(name = "price")
-    private Integer price;
+    private BigDecimal price;
 
     @ManyToOne
+
+
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -33,19 +32,11 @@ public class Order {
     @JoinColumn(name = "certificate_id")
     private GiftCertificate giftCertificate;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Date getPurchaseTime() {
+    public LocalDateTime getPurchaseTime() {
         return purchaseTime;
     }
 
-    public void setPurchaseTime(Date purchaseTime) {
+    public void setPurchaseTime(LocalDateTime purchaseTime) {
         this.purchaseTime = purchaseTime;
     }
 
@@ -65,20 +56,21 @@ public class Order {
         this.giftCertificate = giftCertificate;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", purchaseTime=" + purchaseTime +
+                "purchaseTime=" + purchaseTime +
+                ", price=" + price +
                 ", user=" + user +
+                ", giftCertificate=" + giftCertificate +
                 '}';
     }
 }

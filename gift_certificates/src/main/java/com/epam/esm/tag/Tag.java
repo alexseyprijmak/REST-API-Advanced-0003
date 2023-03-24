@@ -2,6 +2,7 @@ package com.epam.esm.tag;
 
 
 import com.epam.esm.giftCertificate.GiftCertificate;
+import com.epam.esm.utils.abstractClasses.Identifiable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -11,17 +12,10 @@ import java.util.Set;
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "tags")
-public class Tag {
+public class Tag extends Identifiable {
 
     public Tag() {
     }
-
-
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "tag_id")
-    private Integer id;
 
     @Column(name = "name")
     private String name;
@@ -37,14 +31,6 @@ public class Tag {
             mappedBy = "tags")
     @JsonIgnore
     private Set<GiftCertificate> giftCertificateSet = new HashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -65,8 +51,7 @@ public class Tag {
     @Override
     public String toString() {
         return "Tag{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", giftCertificateSet=" + giftCertificateSet +
                 '}';
     }

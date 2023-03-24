@@ -1,21 +1,24 @@
 package com.epam.esm.giftCertificate;
 
-import com.epam.esm.order.Order;
 import com.epam.esm.tag.Tag;
+import com.epam.esm.utils.abstractClasses.Identifiable;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
-import java.util.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 //@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "gift_certificates")
-public class GiftCertificate {
+public class GiftCertificate extends Identifiable {
 
     public GiftCertificate() {
     }
 
-    public GiftCertificate(String name, String description, Integer price, Integer duration, Date createDate, Date lastUpdateDate) {
+    public GiftCertificate(String name, String description, BigDecimal price, Integer duration, LocalDateTime createDate, LocalDateTime lastUpdateDate) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -26,11 +29,6 @@ public class GiftCertificate {
 
 
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "certificate_id")
-    private Integer id;
-
     @Column(name = "name")
     private String name;
 
@@ -38,18 +36,18 @@ public class GiftCertificate {
     private String description;
 
     @Column(name = "price")
-    private Integer price;
+    private BigDecimal price;
 
     @Column(name = "duration")
     private Integer duration;
 
     @Column(name = "create_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date createDate;
+    private LocalDateTime createDate;
 
     @Column(name = "last_update_date")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private Date lastUpdateDate;
+    private LocalDateTime lastUpdateDate;
 
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
@@ -60,14 +58,6 @@ public class GiftCertificate {
             joinColumns = { @JoinColumn(name = "certificate_id") },
             inverseJoinColumns = { @JoinColumn(name = "tag_id") })
     private Set<Tag> tags = new HashSet<>();
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;
@@ -85,11 +75,11 @@ public class GiftCertificate {
         this.description = description;
     }
 
-    public Integer getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
@@ -101,19 +91,19 @@ public class GiftCertificate {
         this.duration = duration;
     }
 
-    public Date getCreateDate() {
+    public LocalDateTime getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(LocalDateTime createDate) {
         this.createDate = createDate;
     }
 
-    public Date getLastUpdateDate() {
+    public LocalDateTime getLastUpdateDate() {
         return lastUpdateDate;
     }
 
-    public void setLastUpdateDate(Date lastUpdateDate) {
+    public void setLastUpdateDate(LocalDateTime lastUpdateDate) {
         this.lastUpdateDate = lastUpdateDate;
     }
 
@@ -124,35 +114,12 @@ public class GiftCertificate {
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
     }
-    //    public void addTag(Tag tag) {
-//        this.tags.add(tag);
-//        tag.getGiftCertificates().add(this);
-//    }
-//
-//    public Set<Tag> getTags() {
-//        return tags;
-//    }
-//
-//    public void setTags(Set<Tag> tags) {
-//        this.tags = tags;
-//    }
-//
-//    public void removeTag(long tagId) {
-//        Tag tag = this.tags.stream().filter(t -> t.getId() == tagId).findFirst().orElse(null);
-//        if (tag != null) {
-//            this.tags.remove(tag);
-//            tag.getGiftCertificates().remove(this);
-//        }
-//
-//    }
-
 
 
     @Override
     public String toString() {
         return "GiftCertificate{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
+                "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 ", duration=" + duration +

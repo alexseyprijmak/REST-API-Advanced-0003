@@ -1,11 +1,14 @@
 package com.epam.esm.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.epam.esm.order.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -22,8 +25,18 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public User findById(@PathVariable("userId") Integer tagId) {
+    public User findById(@PathVariable("userId") Long tagId) {
         return userService.findById(tagId);
+    }
+
+    @GetMapping("/userOrders/{userId}")
+    public List<Order> getUserOrders(@PathVariable("userId") Long userId) {
+        return userService.getUserOrders(userId);
+    }
+
+    @GetMapping("/userPriceAndPurchaseTime/{userId}")
+    public Map<User, Map<BigDecimal, LocalDateTime>> getUserOrderInformationWithPriceAndPurchaseTime(@PathVariable("userId") Long userId) {
+        return userService.getUserOrderInformationWithPriceAndPurchaseTime(userId);
     }
 
     @PostMapping("/add/{name}")
@@ -32,7 +45,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("userId") Integer userId) {
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable("userId") Long userId) {
         userService.deleteUser(userId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

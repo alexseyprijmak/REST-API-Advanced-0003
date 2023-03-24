@@ -1,17 +1,22 @@
 package com.epam.esm.tag;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import java.util.List;
+
 
 @RestController
 @RequestMapping(value = "/tags")
 public class TagController {
-    @Autowired
-    private TagService tagService;
+    private final TagService tagService;
+
+    public TagController(TagService tagService) {
+        this.tagService = tagService;
+    }
 
     @GetMapping
     public List<Tag> findAll() {
@@ -19,7 +24,7 @@ public class TagController {
     }
 
     @GetMapping("/{tagId}")
-    public Tag findById(@PathVariable("tagId") Integer tagId) {
+    public Tag findById(@PathVariable("tagId") Long tagId) {
         return tagService.findById(tagId);
     }
 
@@ -29,9 +34,13 @@ public class TagController {
     }
 
     @DeleteMapping("/{tagId}")
-    public ResponseEntity<HttpStatus> deleteTag(@PathVariable("tagId") Integer tagId) {
+    public ResponseEntity<HttpStatus> deleteTag(@PathVariable("tagId") Long tagId) {
         tagService.deleteTagById(tagId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/popular")
+    public Tag findMostPopularTagOfUserWithHighestCostOfAllOrders(){
+        return tagService.findMostPopularTagOfUserWithHighestCostOfAllOrders();
+    }
 }

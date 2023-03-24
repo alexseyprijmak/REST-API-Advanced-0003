@@ -1,7 +1,8 @@
 package com.epam.esm.tag;
 
 import com.epam.esm.exeptions.NoSuchEntityException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.epam.esm.giftCertificate.GiftCertificateRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,13 +10,17 @@ import java.util.Optional;
 
 @Service
 public class TagService {
-    @Autowired
-    private TagRepository tagRepository;
+    private final TagRepository tagRepository;
+    private final GiftCertificateRepository giftCertificateRepository;
+    public TagService(TagRepository tagRepository, GiftCertificateRepository giftCertificateRepository) {
+        this.tagRepository = tagRepository;
+        this.giftCertificateRepository = giftCertificateRepository;
+    }
 
     public Tag addTag(String name) {
         List<Tag> tags = tagRepository.findAll().stream()
                 .filter(tagInBd -> name.equals(tagInBd.getName())).toList();
-// TODO what to do when we have such TAG?
+
         if (tags.size() > 0) {
             throw new NoSuchEntityException(String.format("Tag have by name: %s already exists", name));
         } else {
@@ -29,7 +34,7 @@ public class TagService {
         return tagRepository.findAll();
     }
 
-    public Tag findById(Integer tagId) {
+    public Tag findById(Long tagId) {
         Optional<Tag> tag = tagRepository.findById(tagId);
         if (tag.isPresent()) {
             return tag.get();
@@ -38,8 +43,6 @@ public class TagService {
         }
 
     }
-
-
 
     public Tag findByName(String tagName) {
         Optional<Tag> product = tagRepository.findAll().stream().filter(tag -> tag.getName().equals(tagName)).findFirst();
@@ -51,7 +54,15 @@ public class TagService {
 
     }
     // TODO add delete in MtM connection
-    public void deleteTagById(Integer productId) {
-        tagRepository.delete(tagRepository.getById(productId));
+    public void deleteTagById(Long tagId) {
+        Tag tag = tagRepository.getById(tagId);
+        giftCertificateRepository.findAll().forEach(item -> item.getTags().remove(tag));
+        tagRepository.delete(tagRepository.getById(tagId));
+    }
+
+
+    public Tag findMostPopularTagOfUserWithHighestCostOfAllOrders() {
+        Tag  tag = tagRepository.mostPopularTagOfUserWithHighestCostOfAllOrders();
+        return tag;
     }
 }
