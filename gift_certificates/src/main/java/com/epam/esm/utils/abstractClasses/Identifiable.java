@@ -18,10 +18,6 @@ public abstract class Identifiable extends RepresentationModel<Identifiable> {
     public Identifiable() {
     }
 
-   public Identifiable(long id) {
-        this.id = id;
-    }
-
     public long getId() {
         return id;
     }

@@ -1,0 +1,261 @@
+{
+	"info": {
+		"_postman_id": "0b96d33d-fb08-4c1e-bb24-b0d36a58d2a7",
+		"name": "certificates",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20040362"
+	},
+	"item": [
+		{
+			"name": "get all certificates",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/certificates",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"certificates"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get certificate by id",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/certificates/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"certificates",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete certificte by id",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/certificates/1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"certificates",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add certificate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/certificates/add?name=cert20&description=cert des&price=50&duration=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"certificates",
+						"add"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "cert20"
+						},
+						{
+							"key": "description",
+							"value": "cert des"
+						},
+						{
+							"key": "price",
+							"value": "50"
+						},
+						{
+							"key": "duration",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add Tag to Certificate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/certificates/addTag?certificate_id=2&tag_id=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"certificates",
+						"addTag"
+					],
+					"query": [
+						{
+							"key": "certificate_id",
+							"value": "2"
+						},
+						{
+							"key": "tag_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Certificate",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/certificates/update?id=1&name=sdfdfds&description=smth&price=50&duration=5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"certificates",
+						"update"
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "1"
+						},
+						{
+							"key": "name",
+							"value": "sdfdfds"
+						},
+						{
+							"key": "description",
+							"value": "smth"
+						},
+						{
+							"key": "price",
+							"value": "50"
+						},
+						{
+							"key": "duration",
+							"value": "5"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get certificates by tag name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/certificates/getCertificatesByTagName?name=tag1",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"certificates",
+						"getCertificatesByTagName"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "tag1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

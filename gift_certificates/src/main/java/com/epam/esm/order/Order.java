@@ -16,11 +16,11 @@ public class Order extends Identifiable {
     public Order() {}
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Column(name = "purchase_time")
-    private LocalDateTime purchaseTime;
+    @Column(name = "purchas   private LocalDateTime purchaseTime;\n" +
+            "\n" +
+            "    @Column(name = \"price\")\n" +
+            "    private BigDecimal price;e_time")
 
-    @Column(name = "price")
-    private BigDecimal price;
 
     @ManyToOne
 
