@@ -1,9 +1,9 @@
-package com.epam.esm.order;
+package main.java.com.epam.esm.order;
 
-import com.epam.esm.giftCertificate.GiftCertificate;
-import com.epam.esm.user.User;
-import com.epam.esm.utils.abstractClasses.Identifiable;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import main.java.com.epam.esm.giftCertificate.GiftCertificate;
+import main.java.com.epam.esm.user.User;
+import main.java.com.epam.esm.utils.abstractClasses.Identifiable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -13,24 +13,28 @@ import java.time.LocalDateTime;
 @Table(name = "orders")
 public class Order extends Identifiable {
 
-    public Order() {}
-
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    @Column(name = "purchas   private LocalDateTime purchaseTime;\n" +
-            "\n" +
-            "    @Column(name = \"price\")\n" +
-            "    private BigDecimal price;e_time")
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+//    @Column(name = "purchas   private LocalDateTime purchaseTime;\n" +
+//            "\n" +
+//            "    @Column(name = \"price\")\n" +
+//            "    private BigDecimal price;e_time")
 
 
     @ManyToOne
-
-
     @JoinColumn(name = "user_id")
     private User user;
-
     @ManyToOne
     @JoinColumn(name = "certificate_id")
     private GiftCertificate giftCertificate;
+
+    @Column(name = "purchase_time")
+    private LocalDateTime purchaseTime;
+
+    @Column(name = "price")
+    private BigDecimal price;
+
+    public Order() {
+    }
 
     public LocalDateTime getPurchaseTime() {
         return purchaseTime;
