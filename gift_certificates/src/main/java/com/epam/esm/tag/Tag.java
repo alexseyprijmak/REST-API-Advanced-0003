@@ -5,6 +5,7 @@ import com.epam.esm.giftCertificate.GiftCertificate;
 import com.epam.esm.utils.abstractClasses.Identifiable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,15 +15,8 @@ import java.util.Set;
 @Table(name = "tags")
 public class Tag extends Identifiable {
 
-    public Tag() {
-    }
-
     @Column(name = "name")
     private String name;
-
-    public Tag(String name) {
-        this.name = name;
-    }
     @ManyToMany(fetch = FetchType.LAZY,
             cascade = {
                     CascadeType.PERSIST,
@@ -31,6 +25,13 @@ public class Tag extends Identifiable {
             mappedBy = "tags")
     @JsonIgnore
     private Set<GiftCertificate> giftCertificateSet = new HashSet<>();
+
+    public Tag() {
+    }
+
+    public Tag(String name) {
+        this.name = name;
+    }
 
     public String getName() {
         return name;

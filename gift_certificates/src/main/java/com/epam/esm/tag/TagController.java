@@ -1,12 +1,12 @@
 package com.epam.esm.tag;
 
-import org.springframework.data.jpa.repository.Query;
+import com.epam.esm.user.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Map;
 
 
 @RestController
@@ -30,7 +30,7 @@ public class TagController {
 
     @PostMapping("/add/{name}")
     public Tag addTag(@PathVariable("name") String name) {
-          return tagService.addTag(name);
+        return tagService.addTag(name);
     }
 
     @DeleteMapping("/{tagId}")
@@ -39,8 +39,8 @@ public class TagController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/popular")
-    public Tag findMostPopularTagOfUserWithHighestCostOfAllOrders(){
-        return tagService.findMostPopularTagOfUserWithHighestCostOfAllOrders();
-    }
+    //
+
+
+
 }

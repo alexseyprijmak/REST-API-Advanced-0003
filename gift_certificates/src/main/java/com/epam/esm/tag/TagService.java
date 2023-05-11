@@ -2,16 +2,21 @@ package com.epam.esm.tag;
 
 import com.epam.esm.exeptions.NoSuchEntityException;
 import com.epam.esm.giftCertificate.GiftCertificateRepository;
-import org.springframework.data.jpa.repository.Query;
+
+
+import com.epam.esm.user.User;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
 public class TagService {
     private final TagRepository tagRepository;
     private final GiftCertificateRepository giftCertificateRepository;
+
     public TagService(TagRepository tagRepository, GiftCertificateRepository giftCertificateRepository) {
         this.tagRepository = tagRepository;
         this.giftCertificateRepository = giftCertificateRepository;
@@ -53,6 +58,7 @@ public class TagService {
         }
 
     }
+
     // TODO add delete in MtM connection
     public void deleteTagById(Long tagId) {
         Tag tag = tagRepository.getById(tagId);
@@ -61,8 +67,6 @@ public class TagService {
     }
 
 
-    public Tag findMostPopularTagOfUserWithHighestCostOfAllOrders() {
-        Tag  tag = tagRepository.mostPopularTagOfUserWithHighestCostOfAllOrders();
-        return tag;
-    }
+
+
 }

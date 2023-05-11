@@ -1,8 +1,11 @@
 package com.epam.esm.giftCertificate;
 
+
 import com.epam.esm.exeptions.NoSuchEntityException;
 import com.epam.esm.tag.Tag;
 import com.epam.esm.tag.TagRepository;
+
+
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -74,11 +77,11 @@ public class GiftCertificateService {
 //                // TODO exeption? msg
 //                throw new NoSuchEntityException(String.format("Tag  with id : %s is not exists", tagId));
 //            } else {
-                Set<Tag> tagSet = giftCertificate.getTags();
-                tagSet.add(tagRepository.getById(tagId));
-                giftCertificate.setTags(tagSet);
+            Set<Tag> tagSet = giftCertificate.getTags();
+            tagSet.add(tagRepository.getById(tagId));
+            giftCertificate.setTags(tagSet);
 
-                return giftCertificateRepository.save(giftCertificate);
+            return giftCertificateRepository.save(giftCertificate);
 //            }
         }
     }

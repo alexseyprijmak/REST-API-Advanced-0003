@@ -1,6 +1,7 @@
 package com.epam.esm.user;
 
 import com.epam.esm.order.Order;
+import com.epam.esm.tag.Tag;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -50,5 +51,10 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+
+    @GetMapping("/popular")
+    public Tag findMostPopularTagOfUserWithHighestCostOfUsersOrder() {
+        return tagService.findMostPopularTagOfUserWithHighestCostOfAllOrders();
+    }
 
 }

@@ -26,7 +26,7 @@ public class GiftCertificateController {
         return giftCertificateService.findAllGiftCertificate();
     }
 
-    
+
     @PostMapping("/add")
     public GiftCertificate addGiftCertificate(@RequestParam(name = "name") String name,
                                               @RequestParam(name = "description") String description,

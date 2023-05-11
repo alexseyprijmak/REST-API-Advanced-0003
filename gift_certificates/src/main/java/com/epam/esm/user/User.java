@@ -1,25 +1,23 @@
 package com.epam.esm.user;
 
-import com.epam.esm.order.Order;
+
 import com.epam.esm.utils.abstractClasses.Identifiable;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "users")
 public class User extends Identifiable {
 
-    public User() {
-    }
-
-
     @Column(name = "name")
     private String name;
+
+
+    public User() {
+    }
 //
 //    @OneToMany(mappedBy = "user")
 //    private List<Order> orders = new ArrayList<>();

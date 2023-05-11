@@ -1,7 +1,7 @@
 package com.epam.esm.order;
 
-
 import com.epam.esm.giftCertificate.GiftCertificateRepository;
+
 import com.epam.esm.user.UserRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,20 +25,19 @@ public class OrderService {
 
         // TODO chek user and certificate if valid
 
-            Order order = new Order();
-            order.setGiftCertificate(giftCertificateRepository.getById(giftCertificateId));
-            order.setUser(userRepository.getById(userId));
-            order.setPurchaseTime(LocalDateTime.now());
-            order.setPrice(giftCertificateRepository.getById(giftCertificateId).getPrice());
+        Order order = new Order();
+        order.setGiftCertificate(giftCertificateRepository.getById(giftCertificateId));
+        order.setUser(userRepository.getById(userId));
+        order.setPurchaseTime(LocalDateTime.now());
+        order.setPrice(giftCertificateRepository.getById(giftCertificateId).getPrice());
 
-            return orderRepository.save(order);
+        return orderRepository.save(order);
 
     }
 
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
-
 
 
 }

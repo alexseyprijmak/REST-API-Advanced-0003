@@ -1,8 +1,10 @@
 package com.epam.esm.giftCertificate;
 
+
 import com.epam.esm.tag.Tag;
 import com.epam.esm.utils.abstractClasses.Identifiable;
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -15,6 +17,30 @@ import java.util.Set;
 @Table(name = "gift_certificates")
 public class GiftCertificate extends Identifiable {
 
+    @Column(name = "name")
+    private String name;
+    @Column(name = "description")
+    private String description;
+    @Column(name = "price")
+    private BigDecimal price;
+    @Column(name = "duration")
+    private Integer duration;
+    @Column(name = "create_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime createDate;
+    @Column(name = "last_update_date")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime lastUpdateDate;
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "gift_certificates_tags",
+            joinColumns = {@JoinColumn(name = "certificate_id")},
+            inverseJoinColumns = {@JoinColumn(name = "tag_id")})
+    private Set<Tag> tags = new HashSet<>();
+
     public GiftCertificate() {
     }
 
@@ -26,38 +52,6 @@ public class GiftCertificate extends Identifiable {
         this.createDate = createDate;
         this.lastUpdateDate = lastUpdateDate;
     }
-
-
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "description")
-    private String description;
-
-    @Column(name = "price")
-    private BigDecimal price;
-
-    @Column(name = "duration")
-    private Integer duration;
-
-    @Column(name = "create_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime createDate;
-
-    @Column(name = "last_update_date")
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
-    private LocalDateTime lastUpdateDate;
-
-    @ManyToMany(fetch = FetchType.LAZY,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "gift_certificates_tags",
-            joinColumns = { @JoinColumn(name = "certificate_id") },
-            inverseJoinColumns = { @JoinColumn(name = "tag_id") })
-    private Set<Tag> tags = new HashSet<>();
 
     public String getName() {
         return name;
