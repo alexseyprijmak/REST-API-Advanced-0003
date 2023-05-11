@@ -21,7 +21,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    )
 //    Long mostPopularTagOfUserWithHighestCostOfAllOrders();
 
-    @Query("select e from Employees e where e.salary > :salary")
-    Tag findTheMostUsedUsersTag(@Param("salry") Long salary, Sort sort);
+    @Query("" +
+            "select e from Users e where e.salary > :salary")
+    Tag findTheMostUsedUsersTag(@Param("salry") Long salary
+//            ,
+//                                Sort sort
+    );
 
 }
